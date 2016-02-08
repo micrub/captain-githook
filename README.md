@@ -71,11 +71,11 @@ I found https://github.com/logsol/Github-Auto-Deploy after a google search and d
 ## Install & Launch
 
     $ git clone https://github.com/danneu/captain-github
-    $ git 
+    $ git
     $ lein uberjar
     $ java -jar target/captain-githook.jar <PORT>
-    
-You can now direct POST hooks to `http://your.server:<PORT>`. 
+
+You can now direct POST hooks to `http://your.server:<PORT>`.
 
 The captain awaits.
 
@@ -86,7 +86,7 @@ The captain awaits.
 Whenever captain-githook is launched, he creates his mighty vessel of the sea (a directory) if it doesn't exist:
 
     ~/captain-githook
-    
+
 This is where the good captain keeps your repositories.
 
 ### ~/captain-githook/config.edn
@@ -96,8 +96,8 @@ The captain doesn't have anything to do unless you provide at least one reposito
 For example:
 
 ``` clojure
-{:repos [{:url "git@bitbucket.org:danneu/klobb.git"}
-         {:url "git@github.com:danneu/darkstrap.git"}]}
+{:repos [{:url "ssh://git@bitbucket.org:danneu/klobb.git"}
+         {:url "ssh://git@github.com:danneu/darkstrap.git"}]}
 ```
 
 Given the above config, once captain-githook is launched, he will create this directory structure, cloning the repos if it hasn't yet:
@@ -110,7 +110,7 @@ Given the above config, once captain-githook is launched, he will create this di
         - github/
           - danneu/
             - darkstrap/
-        
+
 For each repo, he will:
 
 - Run `git pull origin`.
