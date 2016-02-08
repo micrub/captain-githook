@@ -28,6 +28,8 @@
         provider (host->provider (.getHost uri))
         [_ owner name] (re-find #"\/([^\/]+)\/([^\.]+)"
                                 (.getPath uri))]
+    ;TODO
+    ;throw error if name ,owner or provider are empty
     {:name name
      :owner owner
      :provider provider}))
@@ -74,8 +76,9 @@
         owner (:owner (:repository payload))
         provider (let [host (.getHost (URI. (:canon_url payload)))]
                    (host->provider host))]
-    {:name name 
-     :owner owner 
+    ;TODO throw on empty values
+    {:name name
+     :owner owner
      :provider provider}))
 
 (defn github-payload->repo [payload]
