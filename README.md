@@ -97,7 +97,7 @@ For example:
 
 ``` clojure
 {:repos [{:url "ssh://git@bitbucket.org:danneu/klobb.git"}
-         {:url "ssh://git@github.com:danneu/darkstrap.git"}]}
+         {:url "http://git@github.com:danneu/darkstrap.git"}]}
 ```
 
 Given the above config, once captain-githook is launched, he will create this directory structure, cloning the repos if it hasn't yet:
