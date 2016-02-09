@@ -147,3 +147,7 @@ autodeploy:
 The primary use-case for this script is to restart web processes to ensure they pick up the latest changes.
 
 Since `make autodeploy` is run every time captain-githook is notified that a repo is updated, you want to ensure that autodeploy will shut down the previously deployed processes.
+
+## TODO
+
+* Add support for logback-slack-appender
