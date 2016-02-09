@@ -12,4 +12,5 @@
                  [ring/ring "1.2.0"]
                  [compojure "1.1.5"]
                  [org.clojure/data.json "0.2.3"]
-                 [prismatic/schema "0.1.1"]])
+                 [prismatic/schema "1.0.4"]
+                 [org.julienxx/clj-slack "0.5.2.1"]])
