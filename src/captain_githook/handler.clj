@@ -34,6 +34,7 @@
 ;; incoming lolz
 
 (defn step [msg & tests]
+  ;TODO allow test report message passing into midlewares
   (print (str "---> " msg "... ")) (flush)
   (let [[result reportmsg] (test-each tests)]
      (if result
