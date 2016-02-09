@@ -1,0 +1,2 @@
+{:repos [{:url "ssh://git@bitbucket.org/xxx/yyy.git" :slack {:token "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" :channel "#test1"}}
+         {:url "ssh://git@bitbucket.org/xxx/yyy.git" :slack {:token "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" :channel "#test2"}}]}
