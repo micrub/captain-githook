@@ -10,6 +10,7 @@
             [clojure.data.json :as json]
             [clojure.java.shell :as shell]
             [clojure.pprint :refer [pprint]]
+            [captain-githook.log :as log]
             [ring.util.response :refer [response]])
   (:use compojure.core)
   (:import [java.io File]
@@ -35,15 +36,16 @@
 
 (defn step [msg & tests]
   ;TODO allow test report message passing into midlewares
-  (print (str "---> " msg "... ")) (flush)
+  (log/info (str "---> " msg "... "))
+  ;(flush)
   (let [[result reportmsg] (test-each tests)]
      (if result
-       (println (clansi/style
+       (log/info (clansi/style
                  (str "Success"
                       (when reportmsg
                         (str \newline reportmsg)))
                  :green))
-       (println (clansi/style
+       (log/error (clansi/style
                  (str "Fail"
                       (when reportmsg
                         (str \newline reportmsg)))
@@ -92,9 +94,9 @@
         (if-let [config-repo (repo/repo->config-repo repo)]
           (do (step-sync-repo config-repo)
               (step-autodeploy config-repo))
-          (do (println "Repo not listed in config.edn:")
+          (do (log/error "Repo not listed in config.edn:")
               (pprint repo)))
-        (do (println "Could not parse this payload:")
+        (do (log/error "Could not parse this payload:")
             (pprint payload))))
     (response "Thanks"))
   (route/not-found "Not Found"))
@@ -105,7 +107,7 @@
 ;; Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn exit []
-  (println "---> Exiting")
+  (log/info "---> Exiting")
   (System/exit 0))
 
 (defn start-server [port]
@@ -113,7 +115,7 @@
 
 (defn -main [& args]
   (let [port (Integer. (or (first args) "5009"))]
-    (println "Captain Githook is preparing to set sail.")
+    (log/info "Captain Githook is preparing to set sail.")
     (when-not (step-check-captain-path) (exit))
     (when-not (step-check-config) (exit))
     (doseq [repo (repo/config-repos)]

@@ -13,4 +13,6 @@
                  [compojure "1.1.5"]
                  [org.clojure/data.json "0.2.3"]
                  [prismatic/schema "1.0.4"]
-                 [org.julienxx/clj-slack "0.5.2.1"]])
+                 [org.julienxx/clj-slack "0.5.2.1"]
+                 [org.clojure/tools.logging "0.3.1"]
+                 [ch.qos.logback/logback-classic "1.1.3"]])
