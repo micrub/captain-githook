@@ -9,8 +9,9 @@
   :aot [captain-githook.handler]
   :profiles {:dev {:dependencies [[ring-mock "0.1.5"]]}}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [ring/ring "1.2.0"]
-                 [compojure "1.1.5"]
+                 [ring/ring "1.4.0"]
+                 [ring/ring-defaults "0.1.5"]
+                 [compojure "1.4.0"]
                  [org.clojure/data.json "0.2.3"]
                  [prismatic/schema "1.0.4"]
                  [org.julienxx/clj-slack "0.5.2.1"]

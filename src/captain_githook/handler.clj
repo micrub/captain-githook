@@ -8,6 +8,7 @@
             [clojure.string :as str]
             [ring.util.response :as response]
             [clojure.data.json :as json]
+            [ring.middleware.defaults :refer :all]
             [clojure.java.shell :as shell]
             [clojure.pprint :refer [pprint]]
             [captain-githook.log :as log]
@@ -88,21 +89,21 @@
 ;; Routes ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defroutes app-routes
-  (POST "/" {{payload-string :payload} :params}
-    (let [payload (util/parse-json payload-string)]
-      (if-let [repo (repo/payload->repo payload)]
-        (if-let [config-repo (repo/repo->config-repo repo)]
-          (do (step-sync-repo config-repo)
-              (step-autodeploy config-repo))
-          (do (log/error "Repo not listed in config.edn:")
-              (pprint repo)))
-        (do (log/error "Could not parse this payload:")
-            (pprint payload))))
-    (response "Thanks"))
+  (POST "/" req
+        (let [payload (util/parse-json (slurp (:body req)))]
+          (if-let [repo (repo/payload->repo payload)]
+            (if-let [config-repo (repo/repo->config-repo repo)]
+              (do (step-sync-repo config-repo)
+                  (step-autodeploy config-repo))
+              (do (log/error "Repo not listed in config.edn:")
+                  (pprint repo)))
+            (do (log/error "Could not parse this payload:")
+                (pprint payload))))
+        (response "Thanks"))
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (handler/site (routes app-routes site-defaults)))
 
 ;; Server ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

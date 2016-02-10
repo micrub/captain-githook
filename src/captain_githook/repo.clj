@@ -60,7 +60,7 @@
 ;; Github and Bitbucket send different JSON.
 
 (defn bitbucket-payload? [payload]
-  (when-let [url (:canon_url payload)]
+  (when-let [url (:href (:html (:links (:repository payload))))]
     (= (host->provider (.getHost (URI. url)))
        "bitbucket")))
 
@@ -73,8 +73,8 @@
   "Parses Payload JSON into a Repo."
   [payload]
   (let [name (:name (:repository payload))
-        owner (:owner (:repository payload))
-        provider (let [host (.getHost (URI. (:canon_url payload)))]
+        owner (:username (:owner (:repository payload)))
+        provider (let [host (.getHost (URI. (:href (:html (:links (:repository payload))))))]
                    (host->provider host))]
     ;TODO throw on empty values
     {:name name
