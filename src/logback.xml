@@ -1,7 +1,7 @@
 <configuration debug="false">
         <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
                 <!-- Slack API token -->
-                <token>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</token>
+                <token>xoxp-10066967589-17456938358-20721806035-6648480adb</token>
                 <!-- Channel that you want to post - default is #general -->
                 <channel>#deployments</channel>
                 <!-- Formatting (you can use Slack formatting - URL links, code formatting, etc.) -->
