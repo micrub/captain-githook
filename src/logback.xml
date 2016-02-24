@@ -1,4 +1,31 @@
 <configuration debug="false">
+        <appender name="SLACK" class="com.github.maricn.logback.SlackAppender">
+                <!-- Slack API token -->
+                <token>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</token>
+                <!-- Channel that you want to post - default is #general -->
+                <channel>#deployments</channel>
+                <!-- Formatting (you can use Slack formatting - URL links, code formatting, etc.) -->
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                        <pattern>%-4relative [%thread] %-5level %class - %msg%n</pattern>
+                </layout>
+                <!-- Username of the messages sender -->
+                <username>${HOSTNAME}</username>
+                <!-- Emoji to be used for messages -->
+                <iconEmoji>:stuck_out_tongue_winking_eye:</iconEmoji>
+        </appender>
+        <!-- Currently recommended way of using Slack appender -->
+        <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">
+                <appender-ref ref="SLACK" />
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                        <level>ERROR</level>
+                </filter>
+        </appender>
+        <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">
+                <appender-ref ref="SLACK" />
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                        <level>INFO</level>
+                </filter>
+        </appender>
  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-10contextName %logger{36} - %msg%n</pattern>
@@ -17,8 +44,10 @@
 
   <logger name="captain-githook-logback-integration" level="DEBUG"/>
 
-  <root level="INFO">
-    <appender-ref ref="CONSOLE"/>
-    <appender-ref ref="FILE"/>
+  <root>
+          <level value="ALL" />
+          <appender-ref ref="CONSOLE"/>
+          <appender-ref ref="FILE"/>
+          <appender-ref ref="ASYNC_SLACK" />
   </root>
 </configuration>

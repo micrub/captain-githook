@@ -36,7 +36,7 @@
 ;; incoming lolz
 
 (defn step [msg & tests]
-  ;TODO allow test report message passing into midlewares
+  ;TODO expose the user name that originated log event
   (log/info (str "---> " msg "... "))
   ;(flush)
   (let [[result reportmsg] (test-each tests)]

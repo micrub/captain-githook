@@ -9,6 +9,7 @@
   :aot [captain-githook.handler]
   :profiles {:dev {:dependencies [[ring-mock "0.1.5"]]}}
   :dependencies [[org.clojure/clojure "1.5.1"]
+                 [com.github.maricn/logback-slack-appender "1.1.0"]
                  [ring/ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
                  [compojure "1.4.0"]

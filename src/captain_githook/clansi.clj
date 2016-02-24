@@ -78,7 +78,8 @@
    (style \"foo\" :red :bg-blue :underline)
  "
   [s & codes]
-  (str (apply str (map ansi codes)) s (ansi :reset)))
+  ;(str (apply str (map ansi codes)) s (ansi :reset))
+  s)
 
 (defn wrap-style
   "Wraps a base string with a stylized wrapper.
