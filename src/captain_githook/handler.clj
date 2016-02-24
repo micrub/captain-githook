@@ -90,11 +90,13 @@
 
 (defroutes app-routes
   (POST "/" req
-        (let [payload (util/parse-json (slurp (:body req)))]
+        (let [body (slurp (:body req))
+              payload (util/parse-json body)]
           (if-let [repo (repo/payload->repo payload)]
             (if-let [config-repo (repo/repo->config-repo repo)]
-              (do (step-sync-repo config-repo)
-                  (step-autodeploy config-repo))
+              (do (future
+                    (step-sync-repo config-repo)
+                    (step-autodeploy config-repo)))
               (do (log/error "Repo not listed in config.edn:")
                   (pprint repo)))
             (do (log/error "Could not parse this payload:")
@@ -112,7 +114,7 @@
   (System/exit 0))
 
 (defn start-server [port]
-  (run-jetty app {:port port}))
+  (run-jetty app {:port port }))
 
 (defn -main [& args]
   (let [port (Integer. (or (first args) "5009"))]
