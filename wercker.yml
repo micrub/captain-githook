@@ -10,27 +10,20 @@ keywords:
   - jvm
   - java
   - web
-script: |
-  sudo apt-get update -yq
-  sudo apt-get install -y curl openjdk-7-jdk icedtea-7-plugin
-  sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
-  sudo curl -o /usr/bin/lein -SL https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-  sudo chmod a+x /usr/bin/lein
-  lein
-#build:
-  #steps:
-    #- script:
-        #name: install clojure
-        #code: |
-          #sudo apt-get update
-          #sudo apt-get install openjdk-7-jdk curl -y
-          #sudo wget -O /usr/local/bin/lein https://raw.github.com/technomancy/leiningen/stable/bin/lein
-          #sudo chmod +x /usr/local/bin/lein
-    #- script:
-        #name: run tests
-        #code: |
-          #lein test
-    #- script:
-        #name: build
-        #code: |
-          #lein uberjar
+build:
+  steps:
+    - script:
+        name: install clojure
+        code: |
+          sudo apt-get update
+          sudo apt-get install openjdk-7-jdk curl -y
+          sudo wget -O /usr/local/bin/lein https://raw.github.com/technomancy/leiningen/stable/bin/lein
+          sudo chmod +x /usr/local/bin/lein
+    - script:
+        name: run tests
+        code: |
+          lein test
+    - script:
+        name: build
+        code: |
+          lein uberjar
